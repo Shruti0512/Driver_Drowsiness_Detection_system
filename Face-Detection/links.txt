@@ -1,0 +1,2 @@
+YOLO cfg: https://drive.google.com/drive/folders/1FrVxiarQgDSia-9-KD1TVGxrxUKmmFkW?usp=sharing
+YOLO weights: https://drive.google.com/drive/folders/1FrVxiarQgDSia-9-KD1TVGxrxUKmmFkW?usp=sharing
