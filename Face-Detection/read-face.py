@@ -18,9 +18,11 @@ with open("coco_names.txt", "r") as f:
 layer_names = net.getLayerNames()
 output_layers = [layer_names[i - 1] for i in net.getUnconnectedOutLayers()]
 
+#change src value for usb cameras/other webcams
 vs = WebcamVideoStream(src=0).start()
 clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8,8))
 
+#initialize fps details
 font = cv2.FONT_HERSHEY_PLAIN
 starting_time= time.time()
 frame_id = 0
@@ -35,12 +37,11 @@ while True:
     pp_frame = np.dstack((b, g, r))
 
     #remove noise
-    #pp_frame = cv2.fastNlMeansDenoisingColored(pp_frame, None, 10, 10, 7, 15)
     pp_frame = cv2.bilateralFilter(pp_frame, 5, 65, 65)
     height,width,channels = frame.shape
+
     #detecting objects
     blob = cv2.dnn.blobFromImage(pp_frame,0.00392,(320,320),(0,0,0),True,crop=False) #reduce 416 to 320    
-
 
     net.setInput(blob)
     outs = net.forward(output_layers)
@@ -80,8 +81,7 @@ while True:
     fps=frame_id/elapsed_time
     cv2.putText(frame,"FPS:"+str(round(fps,2)),(10,50),font,2,(0,0,0),1)
     
-    cv2.imshow("Image1",frame) 
-    cv2.imshow("Image2",pp_frame)
+    cv2.imshow("Video",frame) 
     key = cv2.waitKey(1) 
     if key == 27: #esc key stops the process
         break
